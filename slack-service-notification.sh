@@ -101,6 +101,6 @@ fi
 
 
 #Send message to Slack
-PAYLOAD="payload={\"channel\": \"${SLACK_CHANNEL}\", \"username\": \"${SLACK_BOTNAME}\", \"text\": \"${ICON} HOST: <http://${ICINGA_HOSTNAME}/icingaweb2/monitoring/host/services?host=${HOSTNAME}|${HOSTDISPLAYNAME}>   SERVICE: <http://${ICINGA_HOSTNAME}/icingaweb2/monitoring/service/show?host=${HOSTNAME}&service=${SERVICEDESC}|${SERVICEDISPLAYNAME}>  STATE: ${SERVICESTATE}\"}"
+PAYLOAD="payload={\"channel\": \"${SLACK_CHANNEL}\", \"icon_url\": \"${SLACK_ICON_URL}\",  \"username\": \"${SLACK_BOTNAME}\", \"text\": \"${ICON} ${SERVICESTATE} (${NOTIFICATIONTYPE}): <http://${ICINGA_HOSTNAME}/icingaweb2/monitoring/service/show?host=${HOSTNAME}&service=${SERVICEDESC}|${SERVICEDISPLAYNAME}> on <http://${ICINGA_HOSTNAME}/icingaweb2/monitoring/host/services?host=${HOSTNAME}|${HOSTDISPLAYNAME}> returned '${SERVICEOUTPUT}'. ${NOTIFICATIONAUTHORNAME}: '${NOTIFICATIONCOMMENT}' (${NOTIFICATIONTYPE}) \"}"
 
 curl --connect-timeout 30 --max-time 60 -s -S -X POST --data-urlencode "${PAYLOAD}" "${SLACK_WEBHOOK_URL}"
