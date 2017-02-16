@@ -1,9 +1,13 @@
 #!/bin/bash
 
+# HOW TO TEST
+
+# su - icinga -s /bin/bash -c '/usr/bin/env SLACK_WEBHOOK_URL=<YOUR_SLACK_WEBHOOK_INTEGRATION_URL> SLACK_CHANNEL=<YOUR_SLACK_ALERT_CHANNEL> /etc/icinga2/scripts/slack-service-notification.sh --SERVICEDISPLAYNAME testservicedisplayname --SERVICEDESC testservicedesc --SERVICEOUTPUT testserviceoutput --SERVICESTATE OK --HOSTDISPLAYNAME testhostdisplayname --NOTIFICATIONAUTHORNAME testauthor --NOTIFICATIONCOMMENT "Testing notifications" --NOTIFICATIONTYPE Test'
+
 ICINGA_HOSTNAME="<YOUR_ICINGAWEB2_HOSTNAME>"
 SLACK_WEBHOOK_URL="<YOUR_SLACK_WEBHOOK_INTEGRATION_URL>"
-SLACK_CHANNEL="#alerts"
-SLACK_BOTNAME="icinga2"
+SLACK_CHANNEL="<YOUR_SLACK_ALERT_CHANNEL>"
+SLACK_BOTNAME="Icinga 2 Slack Notifier"
 
 #Set the message icon based on ICINGA service state
 if [ "$SERVICESTATE" = "CRITICAL" ]
