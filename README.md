@@ -1,5 +1,13 @@
 # icinga2-slack-notification
 
+Originally based on: "jjethwa/icinga2-slack-notification"
+
+Some changes:
+* We are serious businessmen. We don't want no beer in our alerts.
+* Slack variables could be defined in the environment to help testing.
+* For Director compatibility, most variables could be defined as arguments.
+* Improved message format
+
 ###Your setup may vary, so some of the config files included here may need to be tweaked
 
 1. Set up a new incoming webhook /services/new/incoming-webhook for your team
