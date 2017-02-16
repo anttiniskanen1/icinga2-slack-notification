@@ -93,6 +93,6 @@ fi
 
 
 #Send message to Slack
-PAYLOAD="payload={\"channel\": \"${SLACK_CHANNEL}\", \"icon_url\": \"${SLACK_ICON_URL}\",  \"username\": \"${SLACK_BOTNAME}\", \"text\": \"${ICON} ${HOSTSTATE} (${NOTIFICATIONTYPE}): <http://${ICINGA_HOSTNAME}/icingaweb2/monitoring/host/show?host=${HOST_NAME}|${HOSTDISPLAYNAME}> returned '${HOSTOUTPUT}'. ${NOTIFICATIONAUTHORNAME}: '${NOTIFICATIONCOMMENT}' (${NOTIFICATIONTYPE}) \"}"
+PAYLOAD="payload={\"channel\": \"${SLACK_CHANNEL}\", \"icon_url\": \"${SLACK_ICON_URL}\",  \"username\": \"${SLACK_BOTNAME}\", \"text\": \"${ICON} ${HOSTSTATE} (${NOTIFICATIONTYPE}): <https://${ICINGA_HOSTNAME}/icingaweb2/monitoring/host/show?host=${HOST_NAME}|${HOSTDISPLAYNAME}> returned '${HOSTOUTPUT}'. ${NOTIFICATIONAUTHORNAME}: '${NOTIFICATIONCOMMENT}' (${NOTIFICATIONTYPE}) \"}"
 
 curl --connect-timeout 30 --max-time 60 -s -S -X POST --data-urlencode "${PAYLOAD}" "${SLACK_WEBHOOK_URL}"
