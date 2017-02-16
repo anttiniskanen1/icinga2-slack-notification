@@ -5,7 +5,7 @@
 # su - icinga -s /bin/bash -c '/usr/bin/env SLACK_WEBHOOK_URL=<YOUR_SLACK_WEBHOOK_INTEGRATION_URL> SLACK_CHANNEL=<YOUR_SLACK_ALERT_CHANNEL> /etc/icinga2/scripts/slack-service-notification.sh --SERVICEDISPLAYNAME testservicedisplayname --SERVICEDESC testservicedesc --SERVICEOUTPUT testserviceoutput --SERVICESTATE OK --HOSTDISPLAYNAME testhostdisplayname --NOTIFICATIONAUTHORNAME testauthor --NOTIFICATIONCOMMENT "Testing notifications" --NOTIFICATIONTYPE Test'
 
 # Get arguments from cmd
-TEMP=`getopt -o a --long HOSTADDRESS:,HOSTALIAS:,HOSTDISPLAYNAME:,HOSTNAME:,NOTIFICATIONAUTHORNAME:,NOTIFICATIONCOMMENT:,NOTIFICATIONTYPE:,SERVICEDESC:,SERVICEDISPLAYNAME:,SERVICEOUTPUT:,SERVICESTATE:,SLACK_BOTNAME:,SLACK_CHANNEL:,SLACK_WEBHOOK_URL:,USEREMAIL: -n '/etc/icinga2/scripts/slack-service-notification.sh' -- "$@"`
+TEMP=`getopt -o a --long HOSTADDRESS:,HOSTALIAS:,HOSTDISPLAYNAME:,HOST_NAME:,NOTIFICATIONAUTHORNAME:,NOTIFICATIONCOMMENT:,NOTIFICATIONTYPE:,SERVICEDESC:,SERVICEDISPLAYNAME:,SERVICEOUTPUT:,SERVICESTATE:,SLACK_BOTNAME:,SLACK_CHANNEL:,SLACK_WEBHOOK_URL:,USEREMAIL: -n '/etc/icinga2/scripts/slack-service-notification.sh' -- "$@"`
 
 if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
 
@@ -19,7 +19,7 @@ while true ; do
         --HOSTADDRESS ) HOSTADDRESS="$2"; shift 2 ;;
         --HOSTALIAS ) HOSTALIAS="$2"; shift 2 ;;
         --HOSTDISPLAYNAME ) HOSTDISPLAYNAME="$2"; shift 2 ;;
-        --HOSTNAME ) HOSTNAME="$2"; shift 2 ;;
+        --HOST_NAME ) HOST_NAME="$2"; shift 2 ;;
         --NOTIFICATIONAUTHORNAME ) NOTIFICATIONAUTHORNAME="$2" ; shift 2 ;;
         --NOTIFICATIONCOMMENT ) NOTIFICATIONCOMMENT="$2" ; shift 2 ;;
         --NOTIFICATIONTYPE ) NOTIFICATIONTYPE="$2" ; shift 2 ;;
@@ -101,6 +101,6 @@ fi
 
 
 #Send message to Slack
-PAYLOAD="payload={\"channel\": \"${SLACK_CHANNEL}\", \"icon_url\": \"${SLACK_ICON_URL}\",  \"username\": \"${SLACK_BOTNAME}\", \"text\": \"${ICON} ${SERVICESTATE} (${NOTIFICATIONTYPE}): <http://${ICINGA_HOSTNAME}/icingaweb2/monitoring/service/show?host=${HOSTNAME}&service=${SERVICEDESC}|${SERVICEDISPLAYNAME}> on <http://${ICINGA_HOSTNAME}/icingaweb2/monitoring/host/services?host=${HOSTNAME}|${HOSTDISPLAYNAME}> returned '${SERVICEOUTPUT}'. ${NOTIFICATIONAUTHORNAME}: '${NOTIFICATIONCOMMENT}' (${NOTIFICATIONTYPE}) \"}"
+PAYLOAD="payload={\"channel\": \"${SLACK_CHANNEL}\", \"icon_url\": \"${SLACK_ICON_URL}\",  \"username\": \"${SLACK_BOTNAME}\", \"text\": \"${ICON} ${SERVICESTATE} (${NOTIFICATIONTYPE}): <http://${ICINGA_HOSTNAME}/icingaweb2/monitoring/service/show?host=${HOST_NAME}&service=${SERVICEDESC}|${SERVICEDISPLAYNAME}> on <http://${ICINGA_HOSTNAME}/icingaweb2/monitoring/host/services?host=${HOST_NAME}|${HOSTDISPLAYNAME}> returned '${SERVICEOUTPUT}'. ${NOTIFICATIONAUTHORNAME}: '${NOTIFICATIONCOMMENT}' (${NOTIFICATIONTYPE}) \"}"
 
 curl --connect-timeout 30 --max-time 60 -s -S -X POST --data-urlencode "${PAYLOAD}" "${SLACK_WEBHOOK_URL}"
