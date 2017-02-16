@@ -36,10 +36,47 @@ while true ; do
     esac
 done
 
-ICINGA_HOSTNAME="<YOUR_ICINGAWEB2_HOSTNAME>"
-SLACK_WEBHOOK_URL="<YOUR_SLACK_WEBHOOK_INTEGRATION_URL>"
-SLACK_CHANNEL="<YOUR_SLACK_ALERT_CHANNEL>"
-SLACK_BOTNAME="Icinga 2 Slack Notifier"
+# Get some variables from env for testing
+if [ -z "$ICINGA_HOSTNAME" ]
+then
+        ICINGA_HOSTNAME=$HOSTNAME
+fi
+
+if [ -z "$SLACK_WEBHOOK_URL" ]
+then
+        SLACK_WEBHOOK_URL="<YOUR_SLACK_WEBHOOK_INTEGRATION_URL>"
+fi
+
+if [ -z "$SLACK_CHANNEL" ]
+then
+        SLACK_CHANNEL="<YOUR_SLACK_ALERT_CHANNEL>"
+fi
+
+if [ -z "$SLACK_BOTNAME" ]
+then
+        SLACK_BOTNAME="Icinga 2 Slack Notifier"
+fi
+
+if [ -z "$SLACK_ICON_URL" ]
+then
+        SLACK_ICON_URL="https://exchange.icinga.com/gravatar?username=exchange&size=200"
+fi
+
+if [ -z "$NOTIFICATIONAUTHORNAME" ]
+then
+        NOTIFICATIONAUTHORNAME="Icinga 2"
+fi
+
+if [ -z "$NOTIFICATIONCOMMENT" ]
+then
+        NOTIFICATIONCOMMENT="-"
+fi
+
+if [ -z "$NOTIFICATIONTYPE" ]
+then
+        NOTIFICATIONTYPE="-"
+fi
+
 
 #Set the message icon based on ICINGA service state
 if [ "$SERVICESTATE" = "CRITICAL" ]
