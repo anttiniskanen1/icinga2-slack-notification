@@ -36,6 +36,8 @@ while true ; do
     esac
 done
 
+
+
 # Get some variables from env for testing
 if [ -z "$ICINGA_HOSTNAME" ]
 then
@@ -78,22 +80,25 @@ then
 fi
 
 
+
 #Set the message icon based on ICINGA service state
 if [ "$SERVICESTATE" = "CRITICAL" ]
 then
-    ICON=":bomb:"
+    ICON=":bangbang:"
 elif [ "$SERVICESTATE" = "WARNING" ]
 then
     ICON=":warning:"
 elif [ "$SERVICESTATE" = "OK" ]
 then
-    ICON=":beer:"
+    ICON=":white_check_mark:"
 elif [ "$SERVICESTATE" = "UNKNOWN" ]
 then
-    ICON=":question:"
+    ICON=":grey_question:"
 else
-    ICON=":white_medium_square:"
+    ICON=":bell:"
 fi
+
+
 
 #Send message to Slack
 PAYLOAD="payload={\"channel\": \"${SLACK_CHANNEL}\", \"username\": \"${SLACK_BOTNAME}\", \"text\": \"${ICON} HOST: <http://${ICINGA_HOSTNAME}/icingaweb2/monitoring/host/services?host=${HOSTNAME}|${HOSTDISPLAYNAME}>   SERVICE: <http://${ICINGA_HOSTNAME}/icingaweb2/monitoring/service/show?host=${HOSTNAME}&service=${SERVICEDESC}|${SERVICEDISPLAYNAME}>  STATE: ${SERVICESTATE}\"}"
